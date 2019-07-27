@@ -14,6 +14,7 @@ namespace PMon
     public partial class PMonWindow : Form
     {
         private ulong CurrentTime = 0;
+        private int KeepTime = 30;
 
         private Dictionary<string, Series> Disk;
 
@@ -23,6 +24,7 @@ namespace PMon
         public PMonWindow()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -30,18 +32,16 @@ namespace PMon
             
         }
 
-        private float CurrentTimeData()
+        private double CurrentTimeData()
         {
-            float current_time = CurrentTime * (1 - (timer_update.Interval / (float)1000));
-
-            return current_time;
+            return CurrentTime;
         }
 
         private void Timer_update_Tick(object sender, EventArgs e)
         {
             CurrentTime++;
 
-            float tdata = CurrentTimeData();
+            double tdata = CurrentTimeData();
 
             #region CPU
 
@@ -75,6 +75,14 @@ namespace PMon
             }
 
             #endregion Network
+
+            if (tdata >= KeepTime)
+            {
+                for (var i = 0; i < chart_main.ChartAreas.Count; i++)
+                {
+                    chart_main.ChartAreas[i].AxisX.ScaleView.Zoom(tdata - KeepTime, tdata);
+                }
+            }
         }
 
         private void PMonWindow_Shown(object sender, EventArgs e)
@@ -124,6 +132,16 @@ namespace PMon
             }
 
             timer_update.Enabled = true;
+        }
+
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            timer_update.Interval = (int)numud_updatems.Value;
+        }
+
+        private void Numud_keeptime_ValueChanged(object sender, EventArgs e)
+        {
+            KeepTime = (int)numud_keeptime.Value;
         }
     }
 }
