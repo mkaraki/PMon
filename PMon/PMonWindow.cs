@@ -27,49 +27,7 @@ namespace PMon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            chart_main.ChartAreas[1].Axes[1].Maximum = PC_RAM.FullRam;
-
-
-            Disk = new Dictionary<string, Series>();
-            foreach (string dletter in PC_DISK.Drives)
-            {
-                Series series = new Series();
-
-                series.ChartArea = "carea_disk";
-                series.Name = $"Disk Active Time ({dletter})";
-                series.ChartType = SeriesChartType.Line;
-
-                chart_main.Series.Add(series);
-                Disk.Add(dletter, series);
-            }
-            PC_DISK.Init();
-
-            PC_NIC.Init();
-            TXNIC = new Dictionary<string, Series>();
-            RXNIC = new Dictionary<string, Series>();
-            foreach (string netn in PC_NIC.NICNames)
-            {
-                Series txs = new Series
-                {
-                    ChartArea = "carea_net",
-                    Name = $"TX {netn}",
-                    ChartType = SeriesChartType.Line
-                };
-
-                TXNIC.Add(netn, txs);
-
-                Series rxs = new Series
-                {
-                    ChartArea = "carea_net",
-                    Name = $"RX {netn}",
-                    ChartType = SeriesChartType.Line
-                };
-
-                chart_main.Series.Add(txs);
-                chart_main.Series.Add(rxs);
-
-                RXNIC.Add(netn, rxs);
-            }
+            
         }
 
         private float CurrentTimeData()
@@ -117,6 +75,55 @@ namespace PMon
             }
 
             #endregion Network
+        }
+
+        private void PMonWindow_Shown(object sender, EventArgs e)
+        {
+            chart_main.ChartAreas[1].Axes[1].Maximum = PC_RAM.FullRam;
+
+            Disk = new Dictionary<string, Series>();
+            foreach (string dletter in PC_DISK.Drives)
+            {
+                Series series = new Series
+                {
+                    ChartArea = "carea_disk",
+                    Name = $"Disk Active Time ({dletter})",
+                    ChartType = SeriesChartType.Line
+                };
+
+                chart_main.Series.Add(series);
+                Disk.Add(dletter, series);
+            }
+            PC_DISK.Init();
+
+            PC_NIC.Init();
+            TXNIC = new Dictionary<string, Series>();
+            RXNIC = new Dictionary<string, Series>();
+            foreach (string netn in PC_NIC.NICNames)
+            {
+                Series txs = new Series
+                {
+                    ChartArea = "carea_net",
+                    Name = $"TX {netn}",
+                    ChartType = SeriesChartType.Line
+                };
+
+                TXNIC.Add(netn, txs);
+
+                Series rxs = new Series
+                {
+                    ChartArea = "carea_net",
+                    Name = $"RX {netn}",
+                    ChartType = SeriesChartType.Line
+                };
+
+                chart_main.Series.Add(txs);
+                chart_main.Series.Add(rxs);
+
+                RXNIC.Add(netn, rxs);
+            }
+
+            timer_update.Enabled = true;
         }
     }
 }
