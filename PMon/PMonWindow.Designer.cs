@@ -39,15 +39,16 @@
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart_main = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.timer_update = new System.Windows.Forms.Timer(this.components);
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tablelp_main = new System.Windows.Forms.TableLayoutPanel();
+            this.flowlp_cmain = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.numud_updatems = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.numud_keeptime = new System.Windows.Forms.NumericUpDown();
+            this.btn_reinit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart_main)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.tablelp_main.SuspendLayout();
+            this.flowlp_cmain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numud_updatems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numud_keeptime)).BeginInit();
             this.SuspendLayout();
@@ -110,38 +111,40 @@
             this.chart_main.Size = new System.Drawing.Size(812, 281);
             this.chart_main.TabIndex = 0;
             this.chart_main.Text = "chart1";
+            this.chart_main.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Chart_main_MouseClick);
             // 
             // timer_update
             // 
             this.timer_update.Interval = 1000;
             this.timer_update.Tick += new System.EventHandler(this.Timer_update_Tick);
             // 
-            // tableLayoutPanel1
+            // tablelp_main
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.chart_main, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(818, 317);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tablelp_main.ColumnCount = 1;
+            this.tablelp_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tablelp_main.Controls.Add(this.chart_main, 0, 1);
+            this.tablelp_main.Controls.Add(this.flowlp_cmain, 0, 0);
+            this.tablelp_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablelp_main.Location = new System.Drawing.Point(0, 0);
+            this.tablelp_main.Name = "tablelp_main";
+            this.tablelp_main.RowCount = 2;
+            this.tablelp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tablelp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tablelp_main.Size = new System.Drawing.Size(818, 317);
+            this.tablelp_main.TabIndex = 1;
             // 
-            // flowLayoutPanel1
+            // flowlp_cmain
             // 
-            this.flowLayoutPanel1.Controls.Add(this.label1);
-            this.flowLayoutPanel1.Controls.Add(this.numud_updatems);
-            this.flowLayoutPanel1.Controls.Add(this.label2);
-            this.flowLayoutPanel1.Controls.Add(this.numud_keeptime);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(812, 24);
-            this.flowLayoutPanel1.TabIndex = 1;
+            this.flowlp_cmain.Controls.Add(this.label1);
+            this.flowlp_cmain.Controls.Add(this.numud_updatems);
+            this.flowlp_cmain.Controls.Add(this.label2);
+            this.flowlp_cmain.Controls.Add(this.numud_keeptime);
+            this.flowlp_cmain.Controls.Add(this.btn_reinit);
+            this.flowlp_cmain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowlp_cmain.Location = new System.Drawing.Point(3, 3);
+            this.flowlp_cmain.Name = "flowlp_cmain";
+            this.flowlp_cmain.Size = new System.Drawing.Size(812, 24);
+            this.flowlp_cmain.TabIndex = 1;
             // 
             // label1
             // 
@@ -207,22 +210,31 @@
             0});
             this.numud_keeptime.ValueChanged += new System.EventHandler(this.Numud_keeptime_ValueChanged);
             // 
+            // btn_reinit
+            // 
+            this.btn_reinit.Location = new System.Drawing.Point(427, 3);
+            this.btn_reinit.Name = "btn_reinit";
+            this.btn_reinit.Size = new System.Drawing.Size(75, 23);
+            this.btn_reinit.TabIndex = 4;
+            this.btn_reinit.Text = "Update Info";
+            this.btn_reinit.UseVisualStyleBackColor = true;
+            this.btn_reinit.Click += new System.EventHandler(this.Btn_reinit_Click);
+            // 
             // PMonWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(818, 317);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tablelp_main);
             this.Name = "PMonWindow";
             this.Opacity = 0.9D;
             this.Text = "PMon";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.PMonWindow_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.chart_main)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            this.tablelp_main.ResumeLayout(false);
+            this.flowlp_cmain.ResumeLayout(false);
+            this.flowlp_cmain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numud_updatems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numud_keeptime)).EndInit();
             this.ResumeLayout(false);
@@ -233,12 +245,13 @@
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_main;
         private System.Windows.Forms.Timer timer_update;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tablelp_main;
+        private System.Windows.Forms.FlowLayoutPanel flowlp_cmain;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numud_updatems;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numud_keeptime;
+        private System.Windows.Forms.Button btn_reinit;
     }
 }
 

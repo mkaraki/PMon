@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Microsoft.VisualBasic.Devices;
 
 namespace PMon
 {
-    class PC_RAM
+    internal class PC_RAM
     {
         private static PerformanceCounter PC_ARAM = new PerformanceCounter("Memory", "Available MBytes", string.Empty);
 
@@ -25,7 +21,7 @@ namespace PMon
 
         public static ulong GetFullRAM()
         {
-            Microsoft.VisualBasic.Devices.ComputerInfo info = new Microsoft.VisualBasic.Devices.ComputerInfo();
+            ComputerInfo info = new ComputerInfo();
 
             return info.TotalPhysicalMemory / 1024 / 1024;
         }

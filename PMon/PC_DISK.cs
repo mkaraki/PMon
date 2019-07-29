@@ -9,7 +9,7 @@ namespace PMon
 {
     class PC_DISK
     {
-        public static string[] Drives = System.IO.Directory.GetLogicalDrives();
+        public static List<string> Drives;
 
         private static Dictionary<string, PerformanceCounter> DiskTimePCs;
 
@@ -17,15 +17,19 @@ namespace PMon
         {
             DiskTimePCs = new Dictionary<string, PerformanceCounter>();
 
+            var pcc = new PerformanceCounterCategory("PhysicalDisk");
 
-            foreach (var drv in Drives)
+            Drives = new List<string>();
+
+            foreach (var drv in pcc.GetInstanceNames())
             {
+                if (drv == "_Total") return;
 
-                string instance = "0 " + drv.TrimEnd('\\');
+                Drives.Add(drv);
 
                 DiskTimePCs.Add(
                     drv,
-                    new PerformanceCounter("PhysicalDisk", "% Disk Time", instance)
+                    new PerformanceCounter("PhysicalDisk", "% Disk Time", drv)
                     );
             }
         }

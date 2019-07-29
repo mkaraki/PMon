@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -24,12 +19,6 @@ namespace PMon
         public PMonWindow()
         {
             InitializeComponent();
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
 
         private double CurrentTimeData()
@@ -54,7 +43,7 @@ namespace PMon
             #region RAM
 
             chart_main.Series[2].Points.AddXY(tdata, PC_RAM.UsedRAM());
-            
+
             #endregion RAM
 
             #region Drive
@@ -85,10 +74,11 @@ namespace PMon
             }
         }
 
-        private void PMonWindow_Shown(object sender, EventArgs e)
+        private async void PMonWindow_Shown(object sender, EventArgs e)
         {
             chart_main.ChartAreas[1].Axes[1].Maximum = PC_RAM.FullRam;
 
+            await Task.Run(() => PC_DISK.Init());
             Disk = new Dictionary<string, Series>();
             foreach (string dletter in PC_DISK.Drives)
             {
@@ -99,12 +89,11 @@ namespace PMon
                     ChartType = SeriesChartType.Line
                 };
 
-                chart_main.Series.Add(series);
                 Disk.Add(dletter, series);
+                chart_main.Series.Add(series);
             }
-            PC_DISK.Init();
 
-            PC_NIC.Init();
+            await Task.Run(() => PC_NIC.Init());
             TXNIC = new Dictionary<string, Series>();
             RXNIC = new Dictionary<string, Series>();
             foreach (string netn in PC_NIC.NICNames)
@@ -125,10 +114,10 @@ namespace PMon
                     ChartType = SeriesChartType.Line
                 };
 
+                RXNIC.Add(netn, rxs);
+
                 chart_main.Series.Add(txs);
                 chart_main.Series.Add(rxs);
-
-                RXNIC.Add(netn, rxs);
             }
 
             timer_update.Enabled = true;
@@ -142,6 +131,20 @@ namespace PMon
         private void Numud_keeptime_ValueChanged(object sender, EventArgs e)
         {
             KeepTime = (int)numud_keeptime.Value;
+        }
+
+        private void Btn_reinit_Click(object sender, EventArgs e)
+        {
+            PMonWindow_Shown(null, null);
+        }
+
+        private void Chart_main_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+                return;
+
+            flowlp_cmain.Visible = !flowlp_cmain.Visible;
+            FormBorderStyle = flowlp_cmain.Visible? FormBorderStyle.FixedSingle : FormBorderStyle.None;
         }
     }
 }
