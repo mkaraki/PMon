@@ -59,8 +59,8 @@ namespace PMon
 
             foreach (string netname in PC_NIC.NICNames)
             {
-                TXNIC[netname].Points.AddXY(tdata, (int)(PC_NIC.GetTX(netname) / 1024));
-                RXNIC[netname].Points.AddXY(tdata, (int)(PC_NIC.GetRX(netname) / 1024));
+                TXNIC[netname].Points.AddXY(tdata, PC_NIC.GetTX(netname));
+                RXNIC[netname].Points.AddXY(tdata, PC_NIC.GetRX(netname));
             }
 
             #endregion Network

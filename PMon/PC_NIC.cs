@@ -53,12 +53,12 @@ namespace PMon
 
         public static float GetTX(string name)
         {
-            return TXPCs[name].NextValue();
+            return TXPCs[name].NextValue() * 8 / 1024;
         }
 
         public static float GetRX(string name)
         {
-            return RXPCs[name].NextValue();
+            return RXPCs[name].NextValue() * 8 / 1024;
         }
     }
 }

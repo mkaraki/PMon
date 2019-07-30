@@ -77,7 +77,7 @@
             chartArea3.BackColor = System.Drawing.Color.Transparent;
             chartArea3.Name = "carea_disk";
             chartArea4.AxisX.MaximumAutoSize = 0F;
-            chartArea4.AxisY.Title = "Kbyte/s";
+            chartArea4.AxisY.Title = "Kbps";
             chartArea4.BackColor = System.Drawing.Color.Transparent;
             chartArea4.Name = "carea_net";
             this.chart_main.ChartAreas.Add(chartArea1);
